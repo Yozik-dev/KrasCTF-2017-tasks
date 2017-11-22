@@ -1,0 +1,3 @@
+curl -X PUT localhost:48627/jaqioalgqe -d '{"settings":{"index":{"analysis":{"analyzer":{"autocomplete_analyzer":{"type":"custom","tokenizer":"lowercase","filter":["asciifolding","title_ngram"]}},"filter":{"title_ngram":{"type":"nGram","min_gram":3,"max_gram":5}}}}},"mappings":{"full_address":{"properties":{"full_address":{"type":"string","analyzer":"autocomplete_analyzer","boost":10}}}}}'
+curl -X DELETE 127.0.0.1:48627/jaqioalgqe
+curl -X GET 127.0.0.1:48627/jaqioalgqe

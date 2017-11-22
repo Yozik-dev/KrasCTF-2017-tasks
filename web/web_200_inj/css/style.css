@@ -1,0 +1,22 @@
+.block{
+   background: #eee;
+   border: 1px solid #000;
+}
+.block2{
+   background: #ccc;
+   border: 1px solid #000;
+}
+.pan{
+    margin-left: 50%;
+   }
+   
+#main{
+    background-image:url('7.jpg');
+	color: #fff; 
+    height: 600px; 
+	background-position: center center;
+	background-attachment: fixed;
+	background-size: cover;
+	max-width: 100%;
+	display: block;
+}

