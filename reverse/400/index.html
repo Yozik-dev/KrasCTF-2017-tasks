@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Authentication</title>
+    <style>
+      body {
+        width: 100%;
+        height: 100vh;
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .authentication_form {
+        width: 400px;
+        border: 3px solid black;
+        padding: 15px 30px;
+      }
+      .inputwrapper {
+        margin-bottom: 15px;
+      }
+      .submit {
+        padding: 5px 50px;
+        margin: 0 auto;
+        display: block;
+      }
+      label {
+        font-size: 16px;
+        margin-bottom: 5px;
+        display: block;
+      }
+      input {
+        width: 100%;
+        height: 30px;
+      }
+      #result {
+        margin-bottom: 15px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="authentication_form">
+      <div id="result">
+      </div>
+      <div class="inputwrapper">
+        <label>
+          username
+        </label>
+        <input type="text" class="userinput" id="username"/>
+      </div>
+      <div class="inputwrapper">
+        <label>
+          password
+        </label>
+        <input type="password" class="userinput" id="password"/>
+      </div>
+      <button onclick="OnPasswordSubmit()" class="submit">
+        CHECK
+      </button>
+    </div>
+    <script>
+      function AuthenticateUserWithPassword(username, password) {
+        return fetch("module.wasm").then(response =>
+          response.arrayBuffer()
+        ).then(bytes =>
+          WebAssembly.instantiate(bytes, {})
+        ).then(({module, instance}) => {
+          let instance_buffer = new Uint16Array(instance.exports.credentials.buffer);
+          const user_credentials = username + password;
+          for (let i = 0; i < user_credentials.length; ++i) {
+            instance_buffer[i] = user_credentials.codePointAt(i);
+          }
+          return instance.exports.authenticate(user_credentials.length);
+        });
+      }
+      function OnPasswordSubmit() {
+        const username = document.getElementById("username");
+        const password = document.getElementById("password");
+        AuthenticateUserWithPassword(username.value, password.value)
+          .then(is_authenticated => {
+            let result = document.getElementById("result");
+            result.innerHTML =
+              is_authenticated ? "UR FLAG IS: " + username.value + password.value
+                               : "WRONG";
+          });
+      }
+    </script>
+  </body>
+</html>
