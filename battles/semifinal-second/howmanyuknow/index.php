@@ -11,7 +11,7 @@ if (!isset($_COOKIE['_ym_xyid'])) {
 </head>
 <body>
     <!--    #2kL-->
-    <p>Как много ты знаешь?</p>
-    <p>Ищи 8 частей флага</p>
+    <p>How many u know?</p>
+    <p>Find 8 parts of flag</p>
 </body>
 </html>

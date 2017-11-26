@@ -18,10 +18,10 @@ if (isset($_SESSION['login'])) {
     $query->execute([':login' => $_SESSION['login']]);
     $user = $query->fetchObject();
     if ($_SESSION['is_raffle']) {
-        echo '<a href="./?raffle=1">Начать розыгрыш</a><br>';
+        echo '<a href="./?raffle=1">Start raffle</a><br>';
     }
-    echo 'Логин:' . $user->login . '<br>';
-    echo 'Монетки:' . $user->coin . '<br>';
+    echo 'Login:' . $user->login . '<br>';
+    echo 'Coin:' . $user->coin . '<br>';
     if ($user->coin > 5) {
         echo 'MnePlevatb9Krasav4eg';
     }
@@ -42,21 +42,21 @@ if (isset($_SESSION['login'])) {
                 header('Location: ./');
                 exit;
             } else {
-                $message = 'Такой пользователь уже есть';
+                $message = 'User exists';
             }
         } else {
-            $message = 'Логин пароль не могут быть пустые';
+            $message = 'Login-password cant be empty';
         }
     }
 }
 ?>
 <form method="post" action="./">
     <p>
-        Логин <input type="text" name="login">
+        Login <input type="text" name="login">
     </p>
     <p>
-        Пароль <input type="text" name="password">
+        Password <input type="text" name="password">
     </p>
-    <input type="submit" value="Регистрация">
+    <input type="submit" value="Sign up">
 </form>
-<?= $message ?? '' ?>
+<?= isset($message) ? $message : '' ?>
